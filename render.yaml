@@ -1,26 +1,33 @@
-    1 services:
-    2   - type: web
-    3     name: n8n
-    4     env: docker
-    5     image:
-    6       url: n8nio/n8n
-    7     healthCheckPath: /healthz
-    8     envVars:
-    9       - key: N8N_HOST
-   10         fromService:
-   11           type: web
-   12           name: n8n
-   13           property: url
-   14       - key: WEBHOOK_URL
-   15         fromService:
-   16           type: web
-   17           name: n8n
-   18           property: url
-   19       - key: GENERIC_TIMEZONE
-   20         value: Europe/Paris
-   21       - key: N8N_ENCRYPTION_KEY
-   22         generateValue: true
-   23     disk:
-   24       name: n8n-data
-   25       mountPath: /home/node/.n8n
-   26       sizeGB: 1
+services:
+  - type: web
+    name: n8n
+    env: docker
+    image:
+      url: n8nio/n8n
+    plan: starter # Ou autre plan selon tes besoins
+    healthCheckPath: /healthz
+    envVars:
+      - key: N8N_HOST
+        value: myn8n-app.onrender.com   # <--- Mets ici le nom de ton service Render, sans https://
+      - key: WEBHOOK_URL
+        value: https://myn8n-app.onrender.com/ # <--- Mets ici l'URL complète de ton service Render
+      - key: N8N_PORT
+        value: 10000
+      - key: GENERIC_TIMEZONE
+        value: Europe/Paris
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: "true"
+      - key: N8N_BASIC_AUTH_USER
+        value: admin # Modifie ce nom d'utilisateur
+      - key: N8N_BASIC_AUTH_PASSWORD
+        value: motdepasse # Modifie ce mot de passe
+      - key: N8N_ENCRYPTION_KEY
+        generateValue: true
+    disk:
+      name: n8n-data
+      mountPath: /home/node/.n8n
+      sizeGB: 1
+    autoDeploy: true
+    ports:
+      - port: 10000
+        protocol: http
