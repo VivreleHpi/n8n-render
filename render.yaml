@@ -7,14 +7,20 @@ services:
     7     healthCheckPath: /healthz
     8     envVars:
     9       - key: N8N_HOST
-   10         value: ${{services.n8n.url}}
-   11       - key: WEBHOOK_URL
-   12         value: ${{services.n8n.url}}
-   13       - key: GENERIC_TIMEZONE
-   14         value: Europe/Paris # Remplacez par votre fuseau horaire
-   15       - key: N8N_ENCRYPTION_KEY
-   16         generateValue: true # Render générera une clé sécurisée pour vous
-   17     disk:
-   18       name: n8n-data
-   19       mountPath: /home/node/.n8n
-   20       sizeGB: 1 # Taille du disque persistant (1 Go est suffisant pour commencer)
+   10         fromService:
+   11           type: web
+   12           name: n8n
+   13           property: url
+   14       - key: WEBHOOK_URL
+   15         fromService:
+   16           type: web
+   17           name: n8n
+   18           property: url
+   19       - key: GENERIC_TIMEZONE
+   20         value: Europe/Paris # IMPORTANT: Changez ceci pour votre fuseau horaire
+   21       - key: N8N_ENCRYPTION_KEY
+   22         generateValue: true
+   23     disk:
+   24       name: n8n-data
+   25       mountPath: /home/node/.n8n
+   26       sizeGB: 1
