@@ -1,0 +1,20 @@
+services:
+    2   - type: web
+    3     name: n8n
+    4     env: docker
+    5     image:
+    6       url: n8nio/n8n
+    7     healthCheckPath: /healthz
+    8     envVars:
+    9       - key: N8N_HOST
+   10         value: ${{services.n8n.url}}
+   11       - key: WEBHOOK_URL
+   12         value: ${{services.n8n.url}}
+   13       - key: GENERIC_TIMEZONE
+   14         value: Europe/Paris # Remplacez par votre fuseau horaire
+   15       - key: N8N_ENCRYPTION_KEY
+   16         generateValue: true # Render générera une clé sécurisée pour vous
+   17     disk:
+   18       name: n8n-data
+   19       mountPath: /home/node/.n8n
+   20       sizeGB: 1 # Taille du disque persistant (1 Go est suffisant pour commencer)
