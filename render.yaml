@@ -1,4 +1,4 @@
-services:
+    1 services:
     2   - type: web
     3     name: n8n
     4     env: docker
@@ -17,7 +17,7 @@ services:
    17           name: n8n
    18           property: url
    19       - key: GENERIC_TIMEZONE
-   20         value: Europe/Paris # IMPORTANT: Changez ceci pour votre fuseau horaire
+   20         value: Europe/Paris
    21       - key: N8N_ENCRYPTION_KEY
    22         generateValue: true
    23     disk:
