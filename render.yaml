@@ -4,13 +4,13 @@ services:
     env: docker
     image:
       url: n8nio/n8n
-    plan: starter # Ou autre plan selon tes besoins
+    plan: starter # ou adapte selon ton besoin
     healthCheckPath: /healthz
     envVars:
       - key: N8N_HOST
-        value: myn8n-app.onrender.com   # <--- Mets ici le nom de ton service Render, sans https://
+        value: myn8n-app.onrender.com   # Remplace par le nom réel de ton service Render, sans https://
       - key: WEBHOOK_URL
-        value: https://myn8n-app.onrender.com/ # <--- Mets ici l'URL complète de ton service Render
+        value: https://myn8n-app.onrender.com/ # Remplace par l’URL publique complète de ton service
       - key: N8N_PORT
         value: 10000
       - key: GENERIC_TIMEZONE
@@ -18,9 +18,9 @@ services:
       - key: N8N_BASIC_AUTH_ACTIVE
         value: "true"
       - key: N8N_BASIC_AUTH_USER
-        value: admin # Modifie ce nom d'utilisateur
+        value: admin # modifie ce nom d’utilisateur
       - key: N8N_BASIC_AUTH_PASSWORD
-        value: motdepasse # Modifie ce mot de passe
+        value: motdepasse # modifie ce mot de passe
       - key: N8N_ENCRYPTION_KEY
         generateValue: true
     disk:
@@ -28,6 +28,3 @@ services:
       mountPath: /home/node/.n8n
       sizeGB: 1
     autoDeploy: true
-    ports:
-      - port: 10000
-        protocol: http
